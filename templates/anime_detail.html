@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{{ anime.title }}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<style>
+body{
+background:#0b0b0b;
+color:white;
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+/* NAVBAR */
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 25px;
+background:#000;
+border-bottom:1px solid #222;
+}
+
+.navbar h2{
+color:#e50914;
+}
+
+.navbar a{
+color:white;
+text-decoration:none;
+margin-left:15px;
+}
+
+.navbar a:hover{
+color:#e50914;
+}
+
+/* ANIME DETAIL SECTION */
+.anime-detail{
+display:flex;
+gap:40px;
+padding:40px;
+flex-wrap:wrap;
+}
+
+.anime-detail img{
+width:260px;
+border-radius:10px;
+box-shadow:0 0 20px rgba(0,0,0,0.6);
+}
+
+.anime-info{
+max-width:700px;
+}
+
+.anime-info h1{
+margin-bottom:10px;
+}
+
+.rating{
+color:#ffd700;
+margin-top:10px;
+}
+
+/* PLAYER */
+.player-container{
+padding:20px 40px;
+}
+
+.player-container iframe{
+width:100%;
+height:520px;
+border:none;
+border-radius:10px;
+background:black;
+}
+
+/* SERVER BUTTONS */
+.server-buttons{
+padding:0 40px;
+margin-bottom:20px;
+}
+
+.server-buttons button{
+background:#222;
+color:white;
+border:none;
+padding:8px 14px;
+margin-right:10px;
+cursor:pointer;
+border-radius:5px;
+}
+
+.server-buttons button:hover{
+background:#e50914;
+}
+
+/* EPISODES */
+.section-title{
+padding:0 40px;
+margin-top:30px;
+}
+
+.episode-buttons{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+padding:20px 40px 40px;
+}
+
+.episode-buttons button{
+background:#e50914;
+border:none;
+color:white;
+padding:8px 14px;
+cursor:pointer;
+border-radius:5px;
+}
+
+.episode-buttons button:hover{
+background:#b20710;
+}
+
+@media(max-width:768px){
+
+.anime-detail{
+flex-direction:column;
+align-items:center;
+}
+
+.player-container iframe{
+height:300px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+<h2>OTT Explorer</h2>
+<div>
+<a href="/dashboard">Movies</a>
+<a href="/anime">Anime</a>
+<a href="/watchlist">Watchlist</a>
+<a href="/logout">Logout</a>
+</div>
+</div>
+
+<!-- ANIME INFO -->
+<div class="anime-detail">
+
+<img src="{{ anime.images.jpg.large_image_url if anime.images and anime.images.jpg else '' }}"
+onerror="this.src='https://via.placeholder.com/260x390?text=No+Image'">
+
+<div class="anime-info">
+<h1>{{ anime.title }}</h1>
+<p>{{ anime.synopsis }}</p>
+<p class="rating">⭐ {{ anime.score }}</p>
+</div>
+
+</div>
+
+<!-- PLAYER -->
+<div class="player-container">
+
+{% if tmdb_id is defined and tmdb_id %}
+
+<iframe
+id="player"
+data-id="{{ tmdb_id }}"
+src="https://vidsrc.to/embed/tv/{{ tmdb_id }}"
+allowfullscreen>
+</iframe>
+
+{% else %}
+
+<h3 style="color:red; padding:40px;">
+Streaming not available for this anime.
+</h3>
+
+{% endif %}
+
+</div>
+
+<!-- SERVER SWITCHING -->
+{% if tmdb_id is defined and tmdb_id %}
+
+<div class="server-buttons">
+<button onclick="server1()">Server 1</button>
+<button onclick="server2()">Server 2</button>
+<button onclick="server3()">Server 3</button>
+</div>
+
+{% endif %}
+
+<!-- EPISODES -->
+{% if tmdb_id is defined and tmdb_id %}
+
+<h2 class="section-title">Episodes</h2>
+
+<div class="episode-buttons">
+
+{% for i in range(1,13) %}
+<button class="ep-btn" data-ep="{{ i }}">
+Episode {{ i }}
+</button>
+{% endfor %}
+
+</div>
+
+{% endif %}
+
+<script>
+
+function server1(){
+let player = document.getElementById("player")
+if(!player) return;
+let id = player.getAttribute("data-id")
+player.src = "https://vidsrc.to/embed/tv/" + id
+}
+
+function server2(){
+let player = document.getElementById("player")
+if(!player) return;
+let id = player.getAttribute("data-id")
+player.src = "https://multiembed.mov/?video_id=" + id + "&tmdb=1"
+}
+
+function server3(){
+let player = document.getElementById("player")
+if(!player) return;
+let id = player.getAttribute("data-id")
+player.src = "https://vidsrc.me/embed/tv?tmdb=" + id
+}
+
+function playEpisode(ep){
+let player = document.getElementById("player")
+if(!player) return;
+let id = player.getAttribute("data-id")
+player.src = "https://vidsrc.to/embed/tv/" + id + "/" + ep
+}
+
+</script>
+
+</body>
+</html>

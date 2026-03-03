@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Anime | OTT Explorer</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+
+<h2>OTT Explorer</h2>
+
+<form method="GET" action="{{ url_for('anime') }}">
+
+<input type="text"
+name="search"
+placeholder="Search anime"
+value="{{ request.args.get('search','') }}">
+
+<select name="genre">
+<option value="">Genre</option>
+<option value="Action">Action</option>
+<option value="Adventure">Adventure</option>
+<option value="Comedy">Comedy</option>
+<option value="Drama">Drama</option>
+<option value="Fantasy">Fantasy</option>
+<option value="Horror">Horror</option>
+<option value="Romance">Romance</option>
+<option value="Sci-Fi">Sci-Fi</option>
+<option value="Sports">Sports</option>
+<option value="Supernatural">Supernatural</option>
+<option value="Mystery">Mystery</option>
+</select>
+
+<button type="submit">Filter</button>
+
+</form>
+
+<div>
+<a href="{{ url_for('dashboard') }}">Movies</a>
+<a href="{{ url_for('watchlist') }}">Watchlist</a>
+<a href="{{ url_for('logout') }}">Logout</a>
+</div>
+
+</div>
+
+<h2 class="section-title">Anime</h2>
+
+<div class="movies-grid">
+
+{% for a in anime %}
+
+<div class="card">
+
+<!-- OPEN DETAIL -->
+<a href="{{ url_for('anime_details', id=a.mal_id) }}">
+
+<img class="poster"
+src="{{ a.images.jpg.large_image_url if a.images and a.images.jpg and a.images.jpg.large_image_url else 'https://via.placeholder.com/300x450?text=No+Image' }}"
+>
+
+</a>
+
+<p>{{ a.title }}</p>
+
+<!-- FIXED WATCHLIST ROUTE -->
+<a href="{{ url_for('add_anime_watchlist', id=a.mal_id) }}">
+<button class="watchlist-btn">
+Add Watchlist
+</button>
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% if anime|length == 0 %}
+<div style="padding:40px;text-align:center;opacity:0.6">
+<h2>No anime found</h2>
+</div>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Watchlist</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="navbar">
+<h2>OTT Explorer</h2>
+<div>
+<a href="{{ url_for('dashboard') }}">Movies</a>
+<a href="{{ url_for('anime') }}">Anime</a>
+<a href="{{ url_for('logout') }}">Logout</a>
+</div>
+</div>
+
+<h2 class="section-title">My Watchlist</h2>
+
+<div class="movies-grid">
+
+{% for item in items %}
+
+<div class="card">
+
+{% if item.content_type == "movie" %}
+<a href="{{ url_for('movie_details', id=item.content_id) }}">
+<img class="poster"
+src="{{ image_base }}{{ item.poster }}"
+onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
+</a>
+
+{% else %}
+<a href="{{ url_for('anime_details', id=item.content_id) }}">
+<img class="poster"
+src="{{ item.poster }}"
+onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
+</a>
+{% endif %}
+
+<p>{{ item.title }}</p>
+
+<a href="{{ url_for('remove_watchlist', id=item.id) }}">
+<button class="watchlist-btn">Remove</button>
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% if items|length == 0 %}
+<div style="padding:40px;text-align:center;opacity:0.6">
+<h2>No items in watchlist</h2>
+</div>
+{% endif %}
+
+</body>
+</html>

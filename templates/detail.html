@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>{{movie.title}}</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<style>
+
+body{
+background:#0b0b0b;
+color:white;
+font-family:Arial, Helvetica, sans-serif;
+margin:0;
+}
+
+/* HERO BACKGROUND */
+
+.hero{
+height:60vh;
+background:
+linear-gradient(to top, #0b0b0b 20%, rgba(0,0,0,0.2)),
+url("https://image.tmdb.org/t/p/original{{movie.backdrop_path}}");
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:flex-end;
+padding:40px;
+}
+
+/* MOVIE TITLE */
+
+.hero h1{
+font-size:48px;
+margin:0;
+}
+
+/* DETAILS SECTION */
+
+.detail-container{
+display:flex;
+gap:40px;
+padding:40px;
+}
+
+/* POSTER */
+
+.poster{
+width:280px;
+border-radius:10px;
+box-shadow:0 0 20px rgba(0,0,0,0.6);
+}
+
+/* INFO */
+
+.info{
+max-width:700px;
+}
+
+.info h2{
+font-size:28px;
+margin-bottom:10px;
+}
+
+.rating{
+color:#ffd700;
+font-size:18px;
+margin-top:10px;
+}
+
+/* BUTTONS */
+
+.buttons{
+margin-top:20px;
+}
+
+.buttons button{
+background:#e50914;
+border:none;
+padding:12px 22px;
+margin-right:10px;
+color:white;
+cursor:pointer;
+border-radius:6px;
+font-size:15px;
+transition:0.2s;
+}
+
+.buttons button:hover{
+background:#ff1c26;
+transform:scale(1.05);
+}
+
+/* PLAYER */
+
+.player-container{
+width:100%;
+padding:20px 40px;
+}
+
+.player-container iframe{
+width:100%;
+height:520px;
+border:none;
+border-radius:10px;
+box-shadow:0 0 20px rgba(0,0,0,0.8);
+}
+
+/* SERVERS */
+
+.server-buttons{
+padding:0 40px 40px;
+}
+
+.server-buttons button{
+background:#222;
+color:white;
+border:none;
+padding:10px 15px;
+margin-right:10px;
+cursor:pointer;
+border-radius:5px;
+transition:0.2s;
+}
+
+.server-buttons button:hover{
+background:#e50914;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.detail-container{
+flex-direction:column;
+align-items:center;
+text-align:center;
+}
+
+.poster{
+width:220px;
+}
+
+.hero h1{
+font-size:32px;
+}
+
+.player-container iframe{
+height:350px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- HERO BANNER -->
+
+<div class="hero">
+
+<h1>{{movie.title}}</h1>
+
+</div>
+
+
+<!-- MOVIE DETAILS -->
+
+<div class="detail-container">
+
+<img class="poster"
+src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}">
+
+<div class="info">
+
+<h2>{{movie.title}}</h2>
+
+<p>{{movie.overview}}</p>
+
+<p class="rating">⭐ {{movie.vote_average}}</p>
+
+<div class="buttons">
+
+<button onclick="playTrailer()">▶ Watch Trailer</button>
+
+<a href="/watchlist/add/{{movie.id}}/{{movie.title}}/{{movie.poster_path}}">
+<button>+ Add to Watchlist</button>
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- STREAM PLAYER -->
+
+<div class="player-container">
+
+<iframe
+id="player"
+data-id="{{movie.id}}"
+src="https://vidsrc.me/embed/movie/{{movie.id}}"
+allowfullscreen>
+</iframe>
+
+</div>
+
+
+<!-- SERVER SWITCH -->
+
+<div class="server-buttons">
+
+<button onclick="server1()">Server 1</button>
+
+<button onclick="server2()">Server 2</button>
+
+<button onclick="server3()">Server 3</button>
+
+<button onclick="server4()">Server 4</button>
+
+</div>
+
+
+<script>
+
+function server1(){
+
+let player = document.getElementById("player")
+let id = player.getAttribute("data-id")
+
+player.src = "https://vidsrc.me/embed/movie/" + id
+
+}
+
+function server2(){
+
+let player = document.getElementById("player")
+let id = player.getAttribute("data-id")
+
+player.src = "https://vidsrc.to/embed/movie/" + id
+
+}
+
+function server3(){
+
+let player = document.getElementById("player")
+let id = player.getAttribute("data-id")
+
+player.src = "https://multiembed.mov/?video_id=" + id + "&tmdb=1"
+
+}
+
+function server4(){
+
+let player = document.getElementById("player")
+let id = player.getAttribute("data-id")
+
+player.src = "https://2embed.cc/embed/" + id
+
+}
+
+
+function playTrailer(){
+
+window.open(
+"https://www.youtube.com/results?search_query={{movie.title}} trailer",
+"_blank"
+)
+
+}
+
+</script>
+
+</body>
+</html>

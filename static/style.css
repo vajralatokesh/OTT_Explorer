@@ -1,0 +1,369 @@
+/* =====================================
+GLOBAL
+===================================== */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#0b0b0b;
+color:#fff;
+font-family:Arial, Helvetica, sans-serif;
+overflow-x:hidden;
+}
+
+
+/* =====================================
+NAVBAR
+===================================== */
+
+/* =====================================
+   NAVBAR
+===================================== */
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 30px;
+background:#000;
+border-bottom:1px solid #222;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.navbar h2{
+color:#e50914;
+font-size:26px;
+}
+
+/* SEARCH + FILTER */
+
+.navbar form{
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+/* SEARCH BOX */
+
+.navbar input{
+padding:12px 16px;
+border-radius:6px;
+border:none;
+background:#222;
+color:#fff;
+font-size:15px;
+min-width:180px;
+}
+
+/* DROPDOWNS */
+
+.navbar select{
+padding:12px 16px;
+border-radius:6px;
+border:none;
+background:#222;
+color:#fff;
+font-size:15px;
+cursor:pointer;
+}
+
+/* FILTER BUTTON */
+
+.navbar button{
+background:#e50914;
+border:none;
+padding:12px 20px;
+border-radius:6px;
+color:#fff;
+cursor:pointer;
+font-size:15px;
+transition:0.2s;
+}
+
+.navbar button:hover{
+background:#ff1e1e;
+}
+
+/* NAV LINKS */
+
+.navbar a{
+color:#fff;
+text-decoration:none;
+margin-left:15px;
+font-size:16px;
+padding:8px 10px;
+border-radius:5px;
+transition:0.2s;
+}
+
+.navbar a:hover{
+color:#e50914;
+background:#111;
+}
+
+
+/* =====================================
+HERO BANNER (FIXED SIZE)
+===================================== */
+
+.hero{
+height:220px;       /* THIS REDUCES THE BIG IMAGE */
+overflow:hidden;
+position:relative;
+}
+
+.hero img{
+width:100%;
+height:220px;
+object-fit:cover;
+filter:brightness(60%);
+}
+
+.hero-content{
+position:absolute;
+bottom:15px;
+left:20px;
+}
+
+.hero-content h1{
+font-size:28px;
+margin-bottom:5px;
+}
+
+.hero-content p{
+font-size:14px;
+max-width:600px;
+}
+
+
+/* =====================================
+MOVIES GRID
+===================================== */
+
+.movies-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+gap:18px;
+padding:20px;
+}
+
+
+/* =====================================
+MOVIE CARD
+===================================== */
+
+.card{
+text-align:center;
+transition:.3s;
+}
+
+.card:hover{
+transform:scale(1.08);
+}
+
+.poster{
+width:100%;
+border-radius:8px;
+cursor:pointer;
+}
+
+.card p{
+margin-top:6px;
+font-size:14px;
+}
+
+
+/* =====================================
+WATCHLIST BUTTON
+===================================== */
+
+.watchlist-btn{
+margin-top:6px;
+padding:6px 10px;
+background:#e50914;
+border:none;
+color:white;
+cursor:pointer;
+border-radius:4px;
+font-size:12px;
+}
+
+
+/* =====================================
+ANIME GRID
+===================================== */
+
+.anime-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+gap:18px;
+padding:20px;
+}
+
+.anime-card img{
+width:100%;
+border-radius:8px;
+}
+
+
+/* =====================================
+DETAIL PAGE
+===================================== */
+
+.detail-container{
+display:flex;
+gap:30px;
+padding:30px;
+flex-wrap:wrap;
+}
+
+.poster-large{
+width:260px;
+border-radius:10px;
+}
+
+.info{
+max-width:650px;
+}
+
+.info h1{
+font-size:32px;
+margin-bottom:10px;
+}
+
+.info p{
+margin-bottom:10px;
+}
+
+.rating{
+color:#ffd700;
+}
+
+.buttons button{
+background:#e50914;
+border:none;
+padding:10px 18px;
+margin-right:10px;
+color:white;
+border-radius:4px;
+cursor:pointer;
+}
+
+
+/* =====================================
+PLAYER
+===================================== */
+
+.player-container{
+padding:20px;
+}
+
+.player-container iframe{
+width:100%;
+height:500px;
+border-radius:8px;
+border:none;
+}
+
+
+/* =====================================
+SERVER BUTTONS
+===================================== */
+
+.server-buttons{
+padding:0 20px 30px;
+}
+
+.server-buttons button{
+background:#222;
+color:white;
+border:none;
+padding:10px 15px;
+margin-right:10px;
+cursor:pointer;
+border-radius:4px;
+}
+
+.server-buttons button:hover{
+background:#e50914;
+}
+
+
+/* =====================================
+SECTION TITLE
+===================================== */
+
+.section-title{
+padding:20px;
+font-size:22px;
+}
+
+
+/* =====================================
+RESPONSIVE
+===================================== */
+
+@media(max-width:900px){
+
+.hero{
+height:160px;
+}
+
+.hero img{
+height:160px;
+}
+
+.movies-grid{
+grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+}
+
+.anime-grid{
+grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+}
+
+.poster-large{
+width:200px;
+}
+
+}
+/* =====================================
+   MOBILE NAVBAR
+===================================== */
+
+@media(max-width:768px){
+
+.navbar{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.navbar form{
+flex-wrap:wrap;
+width:100%;
+}
+
+.navbar input{
+width:100%;
+}
+
+.navbar select{
+width:48%;
+}
+
+.navbar button{
+width:100%;
+font-size:16px;
+padding:14px;
+}
+
+.navbar a{
+font-size:18px;
+padding:10px;
+}
+
+}
